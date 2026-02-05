@@ -1,0 +1,1866 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeri & Berita - OSIS SMK TRITECH INFORMATIKA</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Logo Lightbox Styles - IMPROVED */
+        .logo-lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 99999;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .logo-lightbox.active {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .lightbox-content {
+            background: linear-gradient(135deg, #ffffff 0%, #f5f7fa 100%);
+            border-radius: 25px;
+            padding: 50px;
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+            animation: slideUp 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 25px 80px rgba(46, 125, 50, 0.3);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #2E7D32;
+        }
+        
+        .lightbox-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #2E7D32, #4CAF50, #2E7D32);
+        }
+        
+        @keyframes slideUp {
+            0% {
+                transform: translateY(100px) scale(0.8);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .lightbox-logo {
+            width: 250px;
+            height: 250px;
+            margin: 0 auto 30px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 8px solid #2E7D32;
+            box-shadow: 0 15px 40px rgba(46, 125, 50, 0.4);
+            position: relative;
+            animation: logoGlow 3s infinite alternate;
+            transition: all 0.5s ease;
+        }
+        
+        .lightbox-logo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 50px rgba(46, 125, 50, 0.6);
+        }
+        
+        @keyframes logoGlow {
+            0% {
+                box-shadow: 0 15px 40px rgba(46, 125, 50, 0.4);
+            }
+            100% {
+                box-shadow: 0 15px 40px rgba(46, 125, 50, 0.7), 0 0 30px rgba(46, 125, 50, 0.3);
+            }
+        }
+        
+        .lightbox-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .lightbox-logo:hover img {
+            transform: scale(1.1);
+        }
+        
+        .lightbox-text h2 {
+            color: #2E7D32;
+            font-size: 32px;
+            margin-bottom: 15px;
+            font-weight: 700;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .lightbox-text p {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
+            line-height: 1.6;
+            padding: 0 20px;
+        }
+        
+        .close-lightbox {
+            background: linear-gradient(135deg, #2E7D32 0%, #4CAF50 100%);
+            color: white;
+            border: none;
+            padding: 12px 35px;
+            border-radius: 30px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(46, 125, 50, 0.3);
+            font-size: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .close-lightbox::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+        
+        .close-lightbox:hover::before {
+            left: 100%;
+        }
+        
+        .close-lightbox:hover {
+            background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 100%);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(46, 125, 50, 0.4);
+        }
+        
+        .close-lightbox:active {
+            transform: translateY(-1px) scale(0.98);
+        }
+        
+        /* Logo Hover Effect */
+        .logo {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .logo-icon {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .logo-icon::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border-radius: 50%;
+            background: rgba(46, 125, 50, 0.1);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1;
+        }
+        
+        .logo:hover .logo-icon::after {
+            opacity: 1;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            background: rgba(46, 125, 50, 0.2);
+        }
+        
+        .logo-icon img {
+            position: relative;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+        
+        .logo:hover .logo-icon img {
+            transform: scale(1.1);
+        }
+        
+        /* Pulsating Effect on Hover */
+        @keyframes pulseGlow {
+            0% {
+                box-shadow: 0 0 0 0 rgba(46, 125, 50, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(46, 125, 50, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(46, 125, 50, 0);
+            }
+        }
+        
+        .logo:hover .logo-icon {
+            animation: pulseGlow 1.5s infinite;
+        }
+        
+        /* Info Text on Hover */
+        .logo::before {
+            content: 'Klik untuk melihat detail';
+            position: absolute;
+            bottom: -35px;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background: #2E7D32;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 500;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 5px;
+            border-style: solid;
+            border-color: transparent transparent #2E7D32 transparent;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .logo:hover::before {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+        
+        .logo:hover::after {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Lightbox close button (X) styling */
+        .lightbox-close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: #666;
+            font-size: 28px;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        
+        .lightbox-close-btn:hover {
+            background: rgba(46, 125, 50, 0.1);
+            color: #2E7D32;
+            transform: rotate(90deg);
+        }
+        
+        /* Lightbox additional info */
+        .lightbox-details {
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid #eee;
+        }
+        
+        .detail-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .detail-item i {
+            color: #2E7D32;
+        }
+        
+        /* Logo loading animation */
+        @keyframes logoSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .logo-lightbox.loading .lightbox-logo {
+            animation: logoSpin 1s linear infinite;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .lightbox-content {
+                padding: 30px;
+                width: 95%;
+            }
+            
+            .lightbox-logo {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .lightbox-text h2 {
+                font-size: 24px;
+            }
+            
+            .logo::before {
+                display: none; /* Hide tooltip on mobile */
+            }
+        }
+        
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: var(--white);
+            padding: 70px 0 70px;
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+        
+        .page-header p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        
+        /* Image Lightbox - TRANSPARAN SEPERTI EVENTS */
+        .image-lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); /* Transparan seperti events.html */
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10001;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            backdrop-filter: blur(5px); /* Efek blur di belakang */
+        }
+        
+        .image-lightbox.active {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .image-lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+            animation: imageLightboxIn 0.3s ease;
+        }
+        
+        @keyframes imageLightboxIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        
+        .image-lightbox-content img {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 15px; /* Radius lebih besar */
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.1); /* Border putih tipis */
+        }
+        
+        .image-lightbox-close {
+            position: absolute;
+            top: -60px;
+            right: 0;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 32px;
+            cursor: pointer;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .image-lightbox-close:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+        
+        /* Galeri Modal - TRANSPARAN SEPERTI EVENTS */
+        .galeri-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); /* Transparan seperti events.html */
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            backdrop-filter: blur(5px); /* Efek blur di belakang */
+        }
+        
+        .galeri-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .galeri-modal-content {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(245, 247, 250, 0.95) 100%); /* Transparan */
+            border-radius: 25px; /* Radius lebih besar */
+            padding: 40px;
+            width: 90%;
+            max-width: 1000px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3);
+            animation: modalSlideUp 0.4s ease;
+            border: 1px solid rgba(46, 125, 50, 0.2); /* Border transparan */
+            clip-path: polygon(
+                0 15px, 
+                15px 0, 
+                calc(100% - 15px) 0, 
+                100% 15px, 
+                100% calc(100% - 15px), 
+                calc(100% - 15px) 100%, 
+                15px 100%, 
+                0 calc(100% - 15px)
+            ); /* Potong sudut putih */
+        }
+        
+        @keyframes modalSlideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .galeri-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid rgba(46, 125, 50, 0.5); /* Transparan */
+        }
+        
+        .galeri-modal-header h3 {
+            font-size: 28px;
+            color: #2E7D32;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .galeri-modal-close {
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: #666;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .galeri-modal-close:hover {
+            background-color: rgba(46, 125, 50, 0.1);
+            color: #2E7D32;
+            transform: rotate(90deg);
+        }
+        
+        .galeri-modal-description {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #555;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: rgba(249, 249, 249, 0.8); /* Transparan */
+            border-radius: 15px;
+            border-left: 4px solid rgba(46, 125, 50, 0.7); /* Transparan */
+        }
+        
+        .galeri-images-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .galeri-image-item {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            height: 250px;
+            background-color: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+            clip-path: polygon(
+                0 10px, 
+                10px 0, 
+                calc(100% - 10px) 0, 
+                100% 10px, 
+                100% calc(100% - 10px), 
+                calc(100% - 10px) 100%, 
+                10px 100%, 
+                0 calc(100% - 10px)
+            ); /* Potong sudut */
+        }
+        
+        .galeri-image-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .galeri-image-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .galeri-image-item:hover img {
+            transform: scale(1.05);
+        }
+        
+        .galeri-image-item i {
+            font-size: 60px;
+            color: #2E7D32;
+            opacity: 0.3;
+        }
+        
+        .galeri-modal-footer {
+            padding-top: 20px;
+            border-top: 1px solid rgba(238, 238, 238, 0.7); /* Transparan */
+            text-align: center;
+            color: #666;
+            font-style: italic;
+        }
+        
+        /* Galeri Section - PERBAIKAN: RAPIKAN JARAK */
+        .galeri-section {
+            padding: 80px 0;
+        }
+        
+        .galeri-filter {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 50px;
+        }
+        
+        .galeri-filter .filter-btn {
+            padding: 10px 25px;
+            background-color: var(--light-gray);
+            border: none;
+            border-radius: 50px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .galeri-filter .filter-btn:hover, .galeri-filter .filter-btn.active {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+        
+        /* PERBAIKAN: GALERI GRID - TANGGAL TIDAK JAUH DAN SEJAJAR */
+        .galeri-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 80px;
+        }
+        
+        .galeri-item {
+            background-color: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .galeri-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .galeri-img {
+            height: 250px;
+            background-color: var(--primary-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            color: var(--white);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .galeri-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .galeri-img i {
+            position: absolute;
+        }
+        
+        .galeri-info {
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        
+        .galeri-info h3 {
+            font-size: 22px;
+            color: var(--primary);
+            margin-bottom: 8px; /* Diperkecil */
+            flex-grow: 1;
+        }
+        
+        /* PERBAIKAN: TANGGAL LEBIH DEKAT DENGAN JUDUL */
+        .galeri-date {
+            color: var(--gray);
+            margin-bottom: 15px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .galeri-date i {
+            color: var(--secondary);
+        }
+        
+        .galeri-info p {
+            color: var(--gray);
+            margin-bottom: 20px;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+        
+        /* PERBAIKAN: BUTTON TETAP SEJAJAR */
+        .btn-galery {
+            display: inline-block;
+            padding: 10px 25px;
+            background-color: var(--primary);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            font-family: 'Poppins', sans-serif;
+            margin-top: auto; /* Ini membuat button tetap di bawah */
+            align-self: flex-start; /* Tetap sejajar */
+            min-height: 45px; /* Tinggi konsisten */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-galery:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(46, 125, 50, 0.3);
+        }
+        
+        /* Berita Section - PERBAIKAN: TRANSPARAN DAN RAPIKAN */
+        .berita-section {
+            padding: 80px 0;
+            background-color: var(--light-gray);
+        }
+        
+        .berita-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .berita-card {
+            background-color: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .berita-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .berita-img {
+            height: 200px;
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 70px;
+            color: var(--white);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .berita-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .berita-img i {
+            position: absolute;
+        }
+        
+        .berita-content {
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        
+        /* PERBAIKAN: KATEGORI WARNA KUNING PAS DENGAN TULISAN */
+        .berita-category {
+            display: inline-block;
+            padding: 5px 15px;
+            background-color: rgba(255, 152, 0, 0.1);
+            color: var(--secondary);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            align-self: flex-start; /* Agar tidak melebar */
+            max-width: fit-content; /* Ukuran sesuai teks */
+        }
+        
+        .berita-content h3 {
+            font-size: 20px;
+            color: var(--primary);
+            margin-bottom: 10px;
+            line-height: 1.4;
+            cursor: pointer;
+            flex-grow: 1;
+        }
+        
+        /* PERBAIKAN: TANGGAL LEBIH DEKAT DENGAN JUDUL */
+        .berita-date {
+            color: var(--gray);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+        
+        .berita-content p {
+            color: var(--gray);
+            margin-bottom: 20px;
+            line-height: 1.6;
+            flex-grow: 1;
+        }
+        
+        .btn-berita {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            margin-top: auto; /* Tetap di bawah */
+            align-self: flex-start; /* Tetap sejajar */
+        }
+        
+        .btn-berita:hover {
+            gap: 12px;
+            color: var(--primary-dark);
+        }
+        
+        /* Modal untuk berita - TRANSPARAN SEPERTI EVENTS */
+        .news-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); /* Transparan seperti events.html */
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            backdrop-filter: blur(5px); /* Efek blur di belakang */
+        }
+        
+        .news-modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .news-modal-content {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(245, 247, 250, 0.95) 100%); /* Transparan */
+            border-radius: 25px; /* Radius lebih besar */
+            max-width: 700px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3);
+            animation: modalSlideUp 0.4s ease;
+            border: 1px solid rgba(46, 125, 50, 0.2); /* Border transparan */
+            clip-path: polygon(
+                0 15px, 
+                15px 0, 
+                calc(100% - 15px) 0, 
+                100% 15px, 
+                100% calc(100% - 15px), 
+                calc(100% - 15px) 100%, 
+                15px 100%, 
+                0 calc(100% - 15px)
+            ); /* Potong sudut putih */
+        }
+        
+        .news-modal-header {
+            background: linear-gradient(135deg, rgba(46, 125, 50, 0.9) 0%, rgba(76, 175, 80, 0.9) 100%); /* Transparan */
+            color: white;
+            padding: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 25px 25px 0 0;
+        }
+        
+        .news-modal-header h2 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        .close-news-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+        
+        .close-news-modal:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+        
+        .news-modal-body {
+            padding: 30px;
+        }
+        
+        /* Video Section */
+        .video-section {
+            padding-top: 40px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .video-section h3 {
+            font-size: 24px;
+            color: var(--primary);
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .video-section h3 i {
+            color: var(--secondary);
+        }
+        
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .video-item {
+            background-color: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .video-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .video-thumbnail {
+            height: 180px;
+            background-color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+            clip-path: polygon(
+                0 10px, 
+                10px 0, 
+                calc(100% - 10px) 0, 
+                100% 10px, 
+                100% calc(100% - 10px), 
+                calc(100% - 10px) 100%, 
+                10px 100%, 
+                0 calc(100% - 10px)
+            ); /* Potong sudut */
+        }
+        
+        .video-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .video-thumbnail i {
+            z-index: 2;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .video-thumbnail::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+        
+        .video-info {
+            padding: 20px;
+        }
+        
+        .video-info h4 {
+            font-size: 18px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .video-info p {
+            color: var(--gray);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        /* Modal Video - TRANSPARAN SEPERTI EVENTS */
+        .video-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7); /* Transparan seperti events.html */
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            backdrop-filter: blur(5px); /* Efek blur di belakang */
+        }
+        
+        .video-modal-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .video-modal-content {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(245, 247, 250, 0.95) 100%); /* Transparan */
+            border-radius: 25px; /* Radius lebih besar */
+            max-width: 900px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.3);
+            animation: modalSlideUp 0.4s ease;
+            border: 1px solid rgba(46, 125, 50, 0.2); /* Border transparan */
+            clip-path: polygon(
+                0 15px, 
+                15px 0, 
+                calc(100% - 15px) 0, 
+                100% 15px, 
+                100% calc(100% - 15px), 
+                calc(100% - 15px) 100%, 
+                15px 100%, 
+                0 calc(100% - 15px)
+            ); /* Potong sudut putih */
+        }
+        
+        .video-modal-header {
+            background: linear-gradient(135deg, rgba(46, 125, 50, 0.9) 0%, rgba(76, 175, 80, 0.9) 100%); /* Transparan */
+            color: white;
+            padding: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 25px 25px 0 0;
+        }
+        
+        .video-modal-header h2 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        .close-video-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+        
+        .close-video-modal:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+        
+        .video-modal-body {
+            padding: 30px;
+        }
+        
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            height: 0;
+            margin-bottom: 20px;
+            background-color: #000;
+            border-radius: 15px;
+            overflow: hidden;
+            clip-path: polygon(
+                0 10px, 
+                10px 0, 
+                calc(100% - 10px) 0, 
+                100% 10px, 
+                100% calc(100% - 10px), 
+                calc(100% - 10px) 100%, 
+                10px 100%, 
+                0 calc(100% - 10px)
+            ); /* Potong sudut */
+        }
+        
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        @media (max-width: 992px) {
+            .galeri-grid, .berita-grid, .video-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+            
+            .galeri-images-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .galeri-grid, .berita-grid, .video-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .galeri-filter {
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding-bottom: 10px;
+            }
+            
+            .galeri-filter .filter-btn {
+                flex-shrink: 0;
+            }
+            
+            .galeri-images-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .galeri-modal-content {
+                padding: 30px 20px;
+            }
+            
+            .galeri-modal-header h3 {
+                font-size: 24px;
+            }
+            
+            .news-modal-content,
+            .video-modal-content {
+                padding: 20px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .page-header h1 {
+                font-size: 36px;
+            }
+            
+            .galeri-images-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .galeri-date {
+                font-size: 13px;
+            }
+            
+            .berita-category {
+                font-size: 11px;
+                padding: 4px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Logo Lightbox - IMPROVED -->
+    <div class="logo-lightbox" id="logoLightbox">
+        <button class="lightbox-close-btn" id="closeLightboxBtn">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="lightbox-content">
+            <div class="lightbox-logo">
+                <img src="osis.jpg" alt="Logo OSIS">
+            </div>
+            <div class="lightbox-text">
+                <h2>OSIS SMK TRITECH INFORMATIKA</h2>
+                
+                <div class="lightbox-details">
+                    <div class="detail-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Periode: 2025/2026</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-users"></i>
+                        <span>Pengurus: 48 Anggota</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-trophy"></i>
+                        <span>Moto: Merangkul Untuk Beraksi</span>
+                    </div>
+                </div>
+                
+                <button class="close-lightbox" id="closeLightbox">
+                    <i class=></i> TUTUP
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Image Lightbox -->
+    <div class="image-lightbox" id="imageLightbox">
+        <button class="image-lightbox-close" id="closeImageLightbox">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="image-lightbox-content">
+            <img id="lightboxImage" src="" alt="Preview Image">
+        </div>
+    </div>
+
+    <!-- Galeri Modal -->
+    <div class="galeri-modal" id="galeriModal">
+        <div class="galeri-modal-content">
+            <div class="galeri-modal-header">
+                <h3 id="modalGaleriTitle"><i class="fas fa-images"></i> <span>Judul Galeri</span></h3>
+                <button class="galeri-modal-close" id="closeGaleriModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="galeri-modal-description" id="modalGaleriDescription">
+                <!-- Deskripsi galeri akan diisi oleh JavaScript -->
+            </div>
+            <div class="galeri-images-grid" id="modalGaleriImages">
+                <!-- Gambar-gambar akan diisi oleh JavaScript -->
+            </div>
+            <div class="galeri-modal-footer">
+                <p><i class="fas fa-info-circle"></i> Klik pada gambar untuk melihat dalam ukuran yang lebih besar</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- News Modal -->
+    <div class="news-modal-overlay" id="newsModal">
+        <div class="news-modal-content">
+            <div class="news-modal-header">
+                <h2 id="newsModalTitle">Judul Berita</h2>
+                <button class="close-news-modal" id="closeNewsModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="news-modal-body" id="newsModalBody">
+                <!-- Konten berita akan diisi oleh JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Video Modal -->
+    <div class="video-modal-overlay" id="videoModal">
+        <div class="video-modal-content">
+            <div class="video-modal-header">
+                <h2 id="videoModalTitle">Video Dokumentasi</h2>
+                <button class="close-video-modal" id="closeVideoModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="video-modal-body">
+                <div class="video-container" id="videoContainer">
+                    <!-- Video akan diisi oleh JavaScript -->
+                </div>
+                <p><em>Video dokumentasi kegiatan OSIS SMK Tritech Informatika</em></p>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <div class="container">
+            <div class="logo" id="logoClick" style="cursor: pointer;" title="Klik untuk melihat detail logo">
+                <!-- Logo OSIS dengan foto -->
+                <div class="logo-icon">
+                    <img src="osis.jpg" alt="Logo OSIS">
+                </div>
+                <div class="logo-text">
+                    <h1>OSIS</h1>
+                    <p>SMK TRITECH INFORMATIKA</p>
+                </div>
+            </div>
+            
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav class="navbar" id="navbar">
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i> HOME</a></li>
+                    <li><a href="pengurus.html"><i class="fas fa-user-friends"></i> PENGURUS OSIS</a></li>
+                    <li><a href="progja.html"><i class="fas fa-tasks"></i> PROGRAM KERJA</a></li>
+                    <li><a href="events.html"><i class="fas fa-calendar-alt"></i> EVENTS</a></li>
+                    <li><a href="galeri.html" class="active"><i class="fas fa-images"></i> GALERI & BERITA</a></li>
+                    <li><a href="pendaftaran.html" class="btn-daftar"><i class="fas fa-user-plus"></i> PENDAFTARAN</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>Galeri & Berita</h1>
+            <p>Kumpulan foto, video, dan berita kegiatan OSIS SMK TRITECH INFORMATIKA</p>
+        </div>
+    </section>
+
+    <section class="galeri-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Galeri Kegiatan</h2>
+                <p>Dokumentasi berbagai kegiatan yang telah dilaksanakan</p>
+            </div>
+            
+            <div class="galeri-grid">
+                <!-- Galeri 1: Pelantikan OSIS -->
+                <div class="galeri-item" data-category="pelantikan">
+                    <div class="galeri-img">
+                        <img src="pelantikan.jpeg" alt="Pelantikan OSIS">
+                    </div>
+                    <div class="galeri-info">
+                        <h3>Pelantikan Pengurus OSIS 2025/2026</h3>
+                        <p class="galeri-date"><i class="far fa-calendar"></i> 17 Februari 2025</p>
+                        <p>Upacara pelantikan pengurus OSIS periode baru dihadiri oleh seluruh siswa dan staf pengajar. Acara berlangsung khidmat di Aula Utama sekolah.</p>
+                        <button class="btn-galery" onclick="openGaleriModal('pelantikan')">
+                            <i class="fas fa-images"></i> Lihat Album
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Galeri 2: Bakti Sosial -->
+                <div class="galeri-item" data-category="sosial">
+                    <div class="galeri-img">
+                        <img src="bazar.jpeg" alt="Bakti Sosial">
+                    </div>
+                    <div class="galeri-info">
+                        <h3>Event Bazar Tritech</h3>
+                        <p class="galeri-date"><i class="far fa-calendar"></i> 11 Desember 2025</p>
+                        <p>Kegiatan Bazar dan Lomba Expo Project di sekolah SMK Tritech Informatika Medan.</p>
+                        <button class="btn-galery" onclick="openGaleriModal('sosial')">
+                            <i class="fas fa-images"></i> Lihat Album
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Galeri 3: Upacara Bendera -->
+                <div class="galeri-item" data-category="rutin">
+                    <div class="galeri-img">
+                        <img src="upacara.jpeg" alt="Upacara Bendera">
+                    </div>
+                    <div class="galeri-info">
+                        <h3>Upacara Bendera Hari Senin</h3>
+                        <p class="galeri-date"><i class="far fa-calendar"></i> 15 November 2025</p>
+                        <p>Pelaksanaan upacara bendera rutin setiap hari Senin yang diikuti oleh seluruh warga sekolah. Upacara dipimpin langsung oleh Ketua OSIS.</p>
+                        <button class="btn-galery" onclick="openGaleriModal('rutin')">
+                            <i class="fas fa-images"></i> Lihat Album
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="berita-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Berita Terkini</h2>
+                <p>Informasi dan update terbaru seputar kegiatan OSIS</p>
+            </div>
+            
+            <div class="berita-grid">
+                <!-- Berita 1: Open Recruitment -->
+                <div class="berita-card">
+                    <div class="berita-img">
+                        <img src="futsal.jpeg" alt="Open Recruitment">
+                    </div>
+                    <div class="berita-content">
+                        <span class="berita-category">Pengumuman</span>
+                        <h3 onclick="openNewsModal('recruitment')">Kegiatan Classmeet Akhir Tahun 2025</h3>
+                        <p class="berita-date"><i class="far fa-calendar"></i> 11 Desember 2025</p>
+                        <button class="btn-berita" onclick="openNewsModal('recruitment')">
+                            Baca Selengkapnya <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Berita 2: Prestasi Lomba Coding -->
+                <div class="berita-card">
+                    <div class="berita-img">
+                        <img src="seminar.jpeg" alt="Juara Lomba Coding">
+                    </div>
+                    <div class="berita-content">
+                        <span class="berita-category">Seminar</span>
+                        <h3 onclick="openNewsModal('prestasi')">OSIS TC Menerima Undangan Seminar di UMSU</h3>
+                        <p class="berita-date"><i class="far fa-calendar"></i> 9 Januari 2026</p>
+                        <button class="btn-berita" onclick="openNewsModal('prestasi')">
+                            Baca Selengkapnya <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Berita 3: Workshop Kreativitas -->
+                <div class="berita-card">
+                    <div class="berita-img">
+                        <img src="baramasod.jpeg" alt="Workshop Kreativitas">
+                    </div>
+                    <div class="berita-content">
+                        <span class="berita-category">Roadshow</span>
+                        <h3 onclick="openNewsModal('workshop')">FREEDOM WITH QURAN</h3>
+                        <p class="berita-date"><i class="far fa-calendar"></i> 02 Oktober 2024</p>
+                        <button class="btn-berita" onclick="openNewsModal('workshop')">
+                            Baca Selengkapnya <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="video-section">
+                <h3><i class="fas fa-video"></i> Video Dokumentasi</h3>
+                <div class="video-grid">
+                    <div class="video-item" onclick="openVideoModal('https://www.youtube.com/embed/qg8xci3ibIc')">
+                        <div class="video-thumbnail">
+                            <img src="https://img.youtube.com/vi/qg8xci3ibIc/maxresdefault.jpg" alt="Video 1">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <div class="video-info">
+                            <h4>Highlight Pelantikan OSIS 2025/2026</h4>
+                            <p>Video singkat dokumentasi upacara pelantikan pengurus OSIS periode baru dengan suasana khidmat.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="video-item" onclick="openVideoModal('https://www.youtube.com/embed/wnH5uTYFb_8')">
+                        <div class="video-thumbnail">
+                            <img src="https://img.youtube.com/vi/wnH5uTYFb_8/maxresdefault.jpg" alt="Video 2">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <div class="video-info">
+                            <h4>Liputan Bakti Sosial ke Panti Asuhan</h4>
+                            <p>Dokumentasi lengkap kegiatan bakti sosial yang dilakukan oleh OSIS dengan penuh kehangatan.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="video-item" onclick="openVideoModal('https://www.youtube.com/embed/Hrc1yyQA178')">
+                        <div class="video-thumbnail">
+                            <img src="https://img.youtube.com/vi/Hrc1yyQA178/maxresdefault.jpg" alt="Video 3">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <div class="video-info">
+                            <h4>Kegiatan OSIS SMK Tritech Informatika</h4>
+                            <p>Dokumentasi berbagai kegiatan dan prestasi OSIS SMK Tritech Informatika dalam satu tahun terakhir.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <!-- Footer logo dengan foto -->
+                        <div class="logo-icon">
+                            <img src="osis.jpg" alt="Logo OSIS">
+                        </div>
+                        <div class="logo-text">
+                            <h3>OSIS</h3>
+                            <p>SMK TRITECH INFORMATIKA</p>
+                        </div>
+                    </div>
+                    <p class="footer-description">Membentuk generasi muda yang berkualitas melalui berbagai kegiatan positif dan pengembangan karakter.</p>
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/osistritech?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="><i class="fab fa-instagram"></i></a>
+                        <a href="https://youtube.com/@officialsmktritechinformat3051?si=jmgbhCuSreIg1KNX"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.tiktok.com/@osistc?_r=1&_t=ZS-93CHCp0XbYP"><i class="fab fa-tiktok"></i></a>
+                        <a href="https://www.facebook.com/share/1BMKiQRStU/?mibextid=wwXIfr"><i class="fab fa-facebook"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Kontak Kami</h4>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> Jl. Bhayangkara No. 484, Indra Kasih, Kec. Medan Tembung, Kota Medan, Sumatera Utara 20221</li>
+                        <li><i class="fas fa-phone"></i> (+62) 811-6333-131</li>
+                        <li><i class="fas fa-envelope"></i> smktritech10@gmail.com</li>
+                        <li><i class="fas fa-clock"></i> Senin - Kamis, 15.00 - 17.30 WIB</li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Newsletter</h4>
+                    <p>Dapatkan informasi terbaru tentang kegiatan OSIS</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Email Anda" required>
+                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; <span class="current-year">2025</span> OSIS SMK TRITECH INFORMATIKA. All Rights Reserved.</p>
+                <p>Designed with <i class="fas fa-heart"></i> by OSIS Web Team</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Data Galeri
+        const galeriData = {
+            'pelantikan': {
+                title: 'Pelantikan Pengurus OSIS 2025/2026',
+                description: 'Upacara pelantikan pengurus OSIS periode baru yang dilaksanakan pada tanggal 17 Februari 2025 di Aula Utama SMK Tritech Informatika. Acara ini dihadiri oleh seluruh siswa, guru, dan staf sekolah. Pengurus OSIS yang dilantik terdiri dari 48 anggota yang telah melalui proses seleksi ketat. Acara dimeriahkan dengan penampilan paduan suara dan tarian tradisional dari siswa.',
+                images: [
+                    'pelantikan.jpeg',
+                    'pelantikan1.jpeg',
+                    'pelantikan2.jpeg',
+                    'pelantikan3.jpeg',
+                    'pelantikan4.jpeg',
+                    'pelantikan5.jpeg'
+                ]
+            },
+            'sosial': {
+                title: 'Event Bazar Tritech',
+                description: 'Kegiatan Bazar dan Lomba Expo Project di sekolah SMK Tritech Informatika Medan pada tanggal 11 Desember 2025. Acara ini diikuti oleh berbagai kelas dengan menampilkan proyek kreatif mereka. Bazar terbuka untuk umum dan mendapat respon yang sangat positif dari masyarakat sekitar.',
+                images: [
+                    'bazar.jpeg',
+                    'bazar1.jpeg',
+                    'bazar2.jpeg',
+                    'bazar3.jpeg',
+                    'bazar4.jpeg',
+                    'bazar5.jpeg'
+                ]
+            },
+            'rutin': {
+                title: 'Upacara Bendera Hari Senin',
+                description: 'Pelaksanaan upacara bendera rutin setiap hari Senin yang diikuti oleh seluruh warga sekolah. Upacara ini dipimpin langsung oleh Ketua OSIS. Upacara dilaksanakan dengan khidmat dan penuh semangat nasionalisme. Setiap minggu, terdapat sesi motivasi dari pembina OSIS untuk membangun karakter siswa.',
+                images: [
+                    'upacara.jpeg',
+                    'kebangkitan1.jpeg',
+                    'kebangkitan2.jpeg',
+                    'kebangkitan3.jpeg',
+                    'kebangkitan4.jpeg',
+                    'kebangkitan5.jpeg'
+                ]
+            }
+        };
+
+        // Data Berita
+        const beritaData = {
+            'recruitment': {
+                title: 'Kegiatan Classmeet Akhir Tahun 2025',
+                content: `
+                    <p><strong>Tanggal:</strong> 11 Desember 2025</p>
+                    <p><strong>Kategori:</strong> Pengumuman</p>
+                    <div style="background-color: rgba(46, 125, 50, 0.05); padding: 20px; border-radius: 10px; margin: 15px 0; border-left: 4px solid #2E7D32;">
+                        <p>Perlombaan Classmeet Futsal akhir tahun 2025 telah dilaksanakan dengan sukses. Acara ini diikuti oleh seluruh kelas di SMK Tritech Informatika dengan semangat sportivitas yang tinggi.</p>
+                    </div>
+                    <p>Classmeet merupakan kegiatan tahunan yang bertujuan untuk meningkatkan kebersamaan dan sportivitas antar siswa. Tahun ini, lomba futsal menjadi salah satu cabang olahraga yang paling dinanti.</p>
+                    <p>Juara pertama diraih oleh kelas XII TKJ 1, juara kedua oleh kelas XI RPL 2, dan juara ketiga oleh kelas X MM 3. Selamat kepada para pemenang!</p>
+                `
+            },
+            'prestasi': {
+                title: 'OSIS TC Menerima Undangan Seminar di UMSU',
+                content: `
+                    <p><strong>Tanggal:</strong> 9 Januari 2026</p>
+                    <p><strong>Kategori:</strong> Seminar</p>
+                    <div style="background-color: rgba(255, 152, 0, 0.05); padding: 20px; border-radius: 10px; margin: 15px 0; border-left: 4px solid #FF9800;">
+                        <p>Anggota OSIS menghadiri Seminar Health Explorace yang diselenggarakan oleh Universitas Muhammadiyah Sumatera Utara (UMSU).</p>
+                    </div>
+                    <p>Sebanyak 15 anggota OSIS SMK Tritech Informatika mendapat kesempatan untuk menghadiri seminar kesehatan yang membahas tentang pentingnya menjaga kesehatan mental dan fisik bagi pelajar.</p>
+                    <p>Seminar ini menghadirkan pembicara dari kalangan akademisi dan praktisi kesehatan. Anggota OSIS yang hadir mendapatkan sertifikat dan pengalaman berharga tentang pentingnya hidup sehat.</p>
+                    <p>Kegiatan ini merupakan bagian dari program pengembangan diri yang dicanangkan oleh OSIS periode 2025/2026.</p>
+                `
+            },
+            'workshop': {
+                title: 'FREEDOM WITH QURAN',
+                content: `
+                    <p><strong>Tanggal:</strong> 02 Oktober 2024</p>
+                    <p><strong>Kategori:</strong> Roadshow</p>
+                    <div style="background-color: rgba(33, 150, 243, 0.05); padding: 20px; border-radius: 10px; margin: 15px 0; border-left: 4px solid #2196F3;">
+                        <p>Mari satukan hati dan langkah untuk Palestina! Acara Roadshow Freedom with Qur'an hadir untuk memperkuat solidaritas kita melalui pesan-pesan penuh makna dari Al-Qur'an.</p>
+                    </div>
+                    <p>Roadshow Freedom with Quran merupakan kegiatan sosial yang bertujuan untuk menggalang dukungan dan doa untuk saudara-saudara kita di Palestina. Acara ini diisi dengan tilawah Quran, kajian islami, dan penggalangan dana.</p>
+                    <p>Kegiatan ini diikuti oleh seluruh siswa muslim SMK Tritech Informatika dan mendapatkan respon yang sangat positif. Terkumpul dana sebesar Rp 15.000.000 yang akan disalurkan melalui lembaga amil zakat terpercaya.</p>
+                    <p>Bersama, kita bisa menjadi bagian dari perjuangan kemanusiaan demi kebebasan Palestina. Yuk, bergabung dan saling mendukung!</p>
+                `
+            }
+        };
+
+        // Function to open image in lightbox
+        function openImageLightbox(imgSrc) {
+            document.getElementById('lightboxImage').src = imgSrc;
+            document.getElementById('imageLightbox').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Function to open galeri modal
+        function openGaleriModal(category) {
+            const data = galeriData[category];
+            if (!data) return;
+            
+            document.getElementById('modalGaleriTitle').innerHTML = `<i class="fas fa-images"></i> <span>${data.title}</span>`;
+            document.getElementById('modalGaleriDescription').textContent = data.description;
+            
+            // Create image elements
+            const imagesContainer = document.getElementById('modalGaleriImages');
+            imagesContainer.innerHTML = '';
+            
+            data.images.forEach(imgSrc => {
+                const imageItem = document.createElement('div');
+                imageItem.className = 'galeri-image-item';
+                imageItem.innerHTML = `<img src="${imgSrc}" alt="${data.title}" onclick="openImageLightbox('${imgSrc}')">`;
+                imagesContainer.appendChild(imageItem);
+            });
+            
+            // Show modal
+            document.getElementById('galeriModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Function to open news modal
+        function openNewsModal(newsId) {
+            const data = beritaData[newsId];
+            if (!data) return;
+            
+            document.getElementById('newsModalTitle').textContent = data.title;
+            document.getElementById('newsModalBody').innerHTML = data.content;
+            
+            // Show modal
+            document.getElementById('newsModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Function to open video modal
+        function openVideoModal(videoUrl) {
+            document.getElementById('videoModalTitle').textContent = 'Video Dokumentasi';
+            
+            // Set video iframe
+            const videoContainer = document.getElementById('videoContainer');
+            videoContainer.innerHTML = `
+                <iframe src="${videoUrl}?autoplay=1" title="Video Dokumentasi OSIS" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            `;
+            
+            // Show modal
+            document.getElementById('videoModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Initialize all event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Logo lightbox events
+            const logoClick = document.getElementById('logoClick');
+            const logoLightbox = document.getElementById('logoLightbox');
+            const closeLightboxBtn = document.getElementById('closeLightboxBtn');
+            const closeLightbox = document.getElementById('closeLightbox');
+            
+            if (logoClick) {
+                logoClick.addEventListener('click', function() {
+                    logoLightbox.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+            }
+            
+            if (closeLightboxBtn) {
+                closeLightboxBtn.addEventListener('click', function() {
+                    logoLightbox.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                });
+            }
+            
+            if (closeLightbox) {
+                closeLightbox.addEventListener('click', function() {
+                    logoLightbox.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                });
+            }
+            
+            if (logoLightbox) {
+                logoLightbox.addEventListener('click', function(e) {
+                    if (e.target === logoLightbox) {
+                        logoLightbox.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            }
+            
+            // Close image lightbox
+            document.getElementById('closeImageLightbox').addEventListener('click', function() {
+                document.getElementById('imageLightbox').classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+            
+            // Close image lightbox when clicking outside
+            document.getElementById('imageLightbox').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+            
+            // Close galeri modal
+            document.getElementById('closeGaleriModal').addEventListener('click', function() {
+                document.getElementById('galeriModal').classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+            
+            // Close galeri modal when clicking outside
+            document.getElementById('galeriModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+            
+            // Close news modal
+            document.getElementById('closeNewsModal').addEventListener('click', function() {
+                document.getElementById('newsModal').classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+            
+            // Close news modal when clicking outside
+            document.getElementById('newsModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+            
+            // Close video modal
+            document.getElementById('closeVideoModal').addEventListener('click', function() {
+                document.getElementById('videoModal').classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+            
+            // Close video modal when clicking outside
+            document.getElementById('videoModal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+            
+            // Close with ESC key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    // Close logo lightbox
+                    if (logoLightbox && logoLightbox.classList.contains('active')) {
+                        logoLightbox.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    }
+                    // Close galeri modal
+                    const galeriModal = document.getElementById('galeriModal');
+                    if (galeriModal && galeriModal.classList.contains('active')) {
+                        galeriModal.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    }
+                    // Close image lightbox
+                    const imageLightbox = document.getElementById('imageLightbox');
+                    if (imageLightbox && imageLightbox.classList.contains('active')) {
+                        imageLightbox.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    }
+                    // Close news modal
+                    const newsModal = document.getElementById('newsModal');
+                    if (newsModal && newsModal.classList.contains('active')) {
+                        newsModal.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    }
+                    // Close video modal
+                    const videoModal = document.getElementById('videoModal');
+                    if (videoModal && videoModal.classList.contains('active')) {
+                        videoModal.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    }
+                }
+            });
+            
+            // Aktifkan menu Galeri & Berita
+            const currentPage = window.location.pathname.split('/').pop();
+            if (currentPage === 'galeri.html') {
+                const navLinks = document.querySelectorAll('.navbar a');
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === 'galeri.html') {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

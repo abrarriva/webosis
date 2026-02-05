@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pengurus OSIS - SMK TRITECH INFORMATIKA</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+    /* Variabel CSS untuk konsistensi */
+    :root {
+        --primary: #2E7D32;
+        --primary-dark: #1B5E20;
+        --primary-light: #4CAF50;
+        --secondary: #FF9800;
+        --white: #ffffff;
+        --dark: #333333;
+        --gray: #777777;
+        --light-gray: #F0F0F0;
+    }
+
+    /* PERBAIKAN: Pastikan html dan body tidak ada whitespace */
+    html, body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        overflow-x: hidden;
+    }
+
+    /* Logo Lightbox Styles */
+    .logo-lightbox {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.95);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 99999;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+    }
+    
+    .logo-lightbox.active {
+        display: flex;
+        opacity: 1;
+    }
+    
+    .lightbox-content {
+        background: linear-gradient(135deg, #ffffff 0%, #f5f7fa 100%);
+        border-radius: 25px;
+        padding: 50px;
+        text-align: center;
+        max-width: 600px;
+        width: 90%;
+        animation: slideUp 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        box-shadow: 0 25px 80px rgba(46, 125, 50, 0.3);
+        position: relative;
+        overflow: hidden;
+        border: 2px solid #2E7D32;
+    }
+    
+    .lightbox-content::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 5px;
+        background: linear-gradient(90deg, #2E7D32, #4CAF50, #2E7D32);
+    }
+    
+    @keyframes slideUp {
+        0% {
+            transform: translateY(100px) scale(0.8);
+            opacity: 0;
+        }
+        100% {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+    }
+    
+    .lightbox-logo {
+        width: 250px;
+        height: 250px;
+        margin: 0 auto 30px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 8px solid #2E7D32;
+        box-shadow: 0 15px 40px rgba(46, 125, 50, 0.4);
+        position: relative;
+        animation: logoGlow 3s infinite alternate;
+        transition: all 0.5s ease;
+    }
+    
+    .lightbox-logo:hover {
+        transform: scale(1.05);
+        box-shadow: 0 20px 50px rgba(46, 125, 50, 0.6);
+    }
+    
+    @keyframes logoGlow {
+        0% {
+            box-shadow: 0 15px 40px rgba(46, 125, 50, 0.4);
+        }
+        100% {
+            box-shadow: 0 15px 40px rgba(46, 125, 50, 0.7), 0 0 30px rgba(46, 125, 50, 0.3);
+        }
+    }
+    
+    .lightbox-logo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+    
+    .lightbox-text h2 {
+        color: #2E7D32;
+        font-size: 32px;
+        margin-bottom: 15px;
+        font-weight: 700;
+        text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .lightbox-text p {
+        color: #666;
+        margin-bottom: 30px;
+        font-size: 16px;
+        line-height: 1.6;
+        padding: 0 20px;
+    }
+    
+    .close-lightbox {
+        background: linear-gradient(135deg, #2E7D32 0%, #4CAF50 100%);
+        color: white;
+        border: none;
+        padding: 12px 35px;
+        border-radius: 30px;
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(46, 125, 50, 0.3);
+        font-size: 16px;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .close-lightbox:hover {
+        background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 100%);
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 8px 20px rgba(46, 125, 50, 0.4);
+    }
+    
+    .logo {
+        position: relative;
+        transition: all 0.3s ease;
+    }
+    
+    .logo:hover {
+        transform: scale(1.05);
+    }
+    
+    .logo-icon {
+        position: relative;
+        transition: all 0.3s ease;
+    }
+    
+    .logo-icon img {
+        position: relative;
+        z-index: 2;
+        transition: all 0.3s ease;
+    }
+    
+    .logo:hover .logo-icon img {
+        transform: scale(1.1);
+    }
+    
+    .lightbox-close-btn {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: none;
+        border: none;
+        color: #666;
+        font-size: 28px;
+        cursor: pointer;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        z-index: 10;
+    }
+    
+    .lightbox-close-btn:hover {
+        background: rgba(46, 125, 50, 0.1);
+        color: #2E7D32;
+        transform: rotate(90deg);
+    }
+    
+    .lightbox-details {
+        margin-top: 25px;
+        padding-top: 25px;
+        border-top: 1px solid #eee;
+    }
+    
+    .detail-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 20px;
+        color: #666;
+        font-size: 14px;
+    }
+    
+    .detail-item i {
+        color: #2E7D32;
+    }
+    
+    /* ===== LIGHTBOX FOTO PENGURUS (DIPERBAIKI) ===== */
+    .pengurus-lightbox {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.7);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 99998;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .pengurus-lightbox.active {
+        display: flex;
+        opacity: 1;
+    }
+
+    .pengurus-lightbox-content {
+        background: white;
+        border-radius: 20px;
+        padding: 40px;
+        max-width: 500px;
+        width: 90%;
+        position: relative;
+        animation: popupPengurus 0.4s ease;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    }
+
+    @keyframes popupPengurus {
+        0% { transform: scale(0.8); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
+    }
+
+    .pengurus-lightbox-close {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: none;
+        border: none;
+        font-size: 24px;
+        color: #666;
+        cursor: pointer;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+
+    .pengurus-lightbox-close:hover {
+        background: rgba(46, 125, 50, 0.1);
+        color: #2E7D32;
+        transform: rotate(90deg);
+    }
+
+    .pengurus-lightbox-photo {
+        width: 250px;
+        height: 250px;
+        margin: 0 auto 25px;
+        border-radius: 50%;
+        overflow: hidden;
+        border: 8px solid #2E7D32;
+        box-shadow: 0 15px 40px rgba(46, 125, 50, 0.4);
+    }
+
+    .pengurus-lightbox-photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .pengurus-lightbox-info {
+        text-align: center;
+    }
+
+    .pengurus-lightbox-info h3 {
+        color: #2E7D32;
+        font-size: 28px;
+        margin-bottom: 10px;
+    }
+
+    .pengurus-lightbox-info .jabatan {
+        color: #1B5E20;
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 15px;
+    }
+
+    .pengurus-lightbox-info .divisi {
+        color: #666;
+        font-size: 16px;
+        margin-bottom: 20px;
+        padding: 8px 20px;
+        background: rgba(46, 125, 50, 0.1);
+        border-radius: 20px;
+        display: inline-block;
+    }
+
+    /* PERBAIKAN: CURSOR UNTUK FOTO */
+    .photo-placeholder,
+    .photo-placeholder.small,
+    .pengurus-card .photo-placeholder,
+    .pengurus-item .photo-placeholder,
+    .anggota-slide .photo-placeholder.small,
+    .sambutan-img .photo-placeholder {
+        cursor: pointer !important;
+    }
+
+    .pengurus-card .photo-placeholder:hover,
+    .pengurus-item .photo-placeholder:hover,
+    .anggota-slide .photo-placeholder.small:hover,
+    .sambutan-img .photo-placeholder:hover {
+        transform: scale(1.05);
+    }
+
+    /* PERBAIKAN: FOTO DI TENGAH */
+    .pengurus-item .photo-placeholder,
+    .pengurus-card .photo-placeholder,
+    .anggota-slide .photo-placeholder.small,
+    .sambutan-img .photo-placeholder {
+        margin-left: auto !important;
+        margin-right: auto !important;
+        display: block !important;
+        text-align: center !important;
+    }
+
+    .pengurus-item .photo-placeholder img,
+    .pengurus-card .photo-placeholder img,
+    .anggota-slide .photo-placeholder.small img,
+    .sambutan-img .photo-placeholder img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: cover !important;
+        object-position: center !important;
+    }
+
+    /* ===== PERBAIKAN TOMBOL INSTAGRAM ===== */
+    .sambutan-img .kontak {
+        display: none !important;
+    }
+    
+    .pengurus-item .instagram-link {
+        display: none !important;
+    }
+    
+    .pengurus-item .kontak {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 10px;
+    }
+    
+    .pengurus-item .kontak .instagram-icon-small {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D);
+        color: white;
+        border-radius: 50%;
+        text-decoration: none;
+        font-size: 16px;
+        transition: all 0.3s ease;
+    }
+    
+    .pengurus-item .kontak .instagram-icon-small:hover {
+        transform: scale(1.1);
+        box-shadow: 0 5px 15px rgba(193, 53, 132, 0.4);
+    }
+    
+    .anggota-slide .kontak {
+        display: none;
+    }
+    
+    /* ===== PERBAIKAN SLIDER ANGGOTA (DIPERBAIKI) - ANIMASI DIPERLAMBAT ===== */
+.anggota-slider-container {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    margin: 20px 0;
+}
+
+.anggota-slider-track {
+    display: flex;
+    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Diubah jadi 0.8s */
+    gap: 20px;
+    will-change: transform;
+}
+    
+    .anggota-slide {
+        flex: 0 0 150px;
+        min-width: 150px;
+        text-align: center;
+        transition: all 0.5s ease; /* Diperlambat dari 0.3s ke 0.5s */
+        animation: slideIn 0.8s ease-out; /* Animasi masuk yang smooth */
+    }
+
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .slider-controls {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        margin-top: 20px;
+    }
+    
+    .slider-btn {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        color: white;
+        border: none;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.4s ease; /* Diperlambat dari 0.3s ke 0.4s */
+        box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
+        font-size: 18px;
+    }
+    
+    .slider-btn:hover {
+        background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+        transform: scale(1.1);
+        box-shadow: 0 6px 18px rgba(46, 125, 50, 0.4);
+    }
+    
+    .slider-btn:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+    }
+    
+    .page-header {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        color: white;
+        padding: 70px 0 70px;
+        text-align: center;
+    }
+    
+    .page-header h1 {
+        font-size: 48px;
+        margin-bottom: 15px;
+    }
+    
+    .page-header p {
+        font-size: 18px;
+        opacity: 0.9;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .lightbox-content {
+            padding: 30px;
+            width: 95%;
+        }
+        
+        .lightbox-logo {
+            width: 200px;
+            height: 200px;
+        }
+        
+        .lightbox-text h2 {
+            font-size: 24px;
+        }
+        
+        .page-header h1 {
+            font-size: 36px;
+        }
+        
+        .pengurus-lightbox-content {
+            padding: 30px;
+        }
+        
+        .pengurus-lightbox-photo {
+            width: 200px;
+            height: 200px;
+        }
+        
+        .pengurus-lightbox-info h3 {
+            font-size: 24px;
+        }
+        
+        .anggota-slide {
+            flex: 0 0 140px;
+        }
+
+        .anggota-slider-track {
+            transition: transform 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Lebih lambat di mobile */
+        }
+    }
+
+    @media (max-width: 576px) {
+        .pengurus-lightbox-content {
+            width: 95%;
+            padding: 25px;
+        }
+        
+        .pengurus-lightbox-photo {
+            width: 180px;
+            height: 180px;
+        }
+        
+        .anggota-slide {
+            flex: 0 0 130px;
+        }
+
+        .anggota-slider-track {
+            transition: transform 1.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Paling lambat di small mobile */
+        }
+    }
+</style>
+</head>
+<body>
+    <!-- Logo Lightbox -->
+    <div class="logo-lightbox" id="logoLightbox">
+        <button class="lightbox-close-btn" id="closeLightboxBtn">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="lightbox-content">
+            <div class="lightbox-logo">
+                <img src="osis.jpg" alt="Logo OSIS">
+            </div>
+            <div class="lightbox-text">
+                <h2>OSIS SMK TRITECH INFORMATIKA</h2>
+                <div class="lightbox-details">
+                    <div class="detail-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Periode: 2025/2026</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-users"></i>
+                        <span>Pengurus: 48 Anggota</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-trophy"></i>
+                        <span>Moto: Merangkul Untuk Beraksi</span>
+                    </div>
+                </div>
+                <button class="close-lightbox" id="closeLightbox">
+                    <i class="fas fa-times"></i> TUTUP
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox Foto Pengurus -->
+    <div class="pengurus-lightbox" id="pengurusLightbox">
+        <button class="pengurus-lightbox-close" id="closePengurusLightbox">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="pengurus-lightbox-content">
+            <div class="pengurus-lightbox-photo">
+                <img id="lightboxPhoto" src="" alt="">
+            </div>
+            <div class="pengurus-lightbox-info">
+                <h3 id="lightboxName">Nama Pengurus</h3>
+                <div class="jabatan" id="lightboxJabatan">Jabatan</div>
+                <div class="divisi" id="lightboxDivisi">Divisi</div>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <div class="container">
+            <div class="logo" id="logoClick" style="cursor: pointer;" title="Klik untuk melihat detail logo">
+                <div class="logo-icon">
+                    <img src="osis.jpg" alt="Logo OSIS">
+                </div>
+                <div class="logo-text">
+                    <h1>OSIS</h1>
+                    <p>SMK TRITECH INFORMATIKA</p>
+                </div>
+            </div>
+            
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <nav class="navbar" id="navbar">
+                <ul>
+                    <li><a href="index.html"><i class="fas fa-home"></i> HOME</a></li>
+                    <li><a href="pengurus.html"><i class="fas fa-user-friends"></i> PENGURUS OSIS</a></li>
+                    <li><a href="progja.html"><i class="fas fa-tasks"></i> PROGRAM KERJA</a></li>
+                    <li><a href="events.html"><i class="fas fa-calendar-alt"></i> EVENTS</a></li>
+                    <li><a href="galeri.html"><i class="fas fa-images"></i> GALERI & BERITA</a></li>
+                    <li><a href="pendaftaran.html" class="btn-daftar"><i class="fas fa-user-plus"></i> PENDAFTARAN</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>Pengurus OSIS</h1>
+            <p>Struktur kepengurusan OSIS SMK TRITECH INFORMATIKA periode 2025/2026</p>
+        </div>
+    </section>
+    <section class="sambutan">
+        <div class="container">
+            <div class="sambutan-content">
+                <div class="sambutan-img">
+                    <div class="photo-placeholder" 
+                         data-name="Syarifa Nazla" 
+                         data-jabatan="KETUA OSIS" 
+                         data-divisi="PENGURUS INTI" 
+                         data-photo="syarifa.jpg" 
+                         data-instagram="https://instagram.com/syarifanazla">
+                        <img src="syarifa.jpg" alt="Syarifa Nazla" onerror="this.parentElement.innerHTML='<i class=\'fas fa-user\'></i>'">
+                    </div>
+                    <h3 id="sambutanName">Syarifa Nazla</h3>
+                    <p class="role" id="sambutanRole">KETUA OSIS</p>
+                    <!-- Tombol Instagram di sambutan dihapus -->
+                </div>
+                
+                <div class="sambutan-text">
+                    <h2>Kata Sambutan</h2>
+                    
+                    <div class="sambutan-slider-wrapper">
+                        <div class="sambutan-slider-item active" 
+                             data-year="2025-2026" 
+                             data-photo="syarifaaa.jpeg" 
+                             data-name="Syarifa Nazla" 
+                             data-role="KETUA OSIS"
+                             data-instagram="https://instagram.com/syarifanazla">
+                            <div class="quote">
+                                <i class="fas fa-quote-left"></i>
+                                <p>"Selamat datang di website OSIS kami. Sebagai wadah organisasi siswa, OSIS memiliki peran penting dalam mengembangkan potensi kepemimpinan, kreativitas, dan karakter siswa. Melalui berbagai kegiatan yang diselenggarakan, kami berharap dapat membentuk generasi muda yang berkualitas dan siap menghadapi tantangan masa depan."</p>
+                                <i class="fas fa-quote-right"></i>
+                            </div>
+                            <p class="signature">--- KETUA OSIS SMK TRITECH INFORMATIKA PERIODE 2025/2026</p>
+                        </div>
+                        
+                        <div class="sambutan-slider-item" 
+                             data-year="2024-2025" 
+                             data-photo="rauf.jpeg" 
+                             data-name="Rauf Admaja Nofianto" 
+                             data-role="PERIODE 2024/2025"
+                             data-instagram="#">
+                            <div class="quote">
+                                <i class="fas fa-quote-left"></i>
+                                <p>"Pengalaman menjadi pengurus OSIS telah mengajarkan saya tentang arti tanggung jawab dan kerja sama tim. Setiap program kerja yang kami jalankan, baik besar maupun kecil, memberikan pelajaran berharga tentang manajemen waktu, kepemimpinan, dan komunikasi yang efektif."</p>
+                                <i class="fas fa-quote-right"></i>
+                            </div>
+                            <p class="signature">--- ALUMNI OSIS SMK TRITECH INFORMATIKA PERIODE 2024/2025</p>
+                        </div>
+                        
+                        <div class="sambutan-slider-item" 
+                             data-year="2023-2024" 
+                             data-photo="nabil.jpeg" 
+                             data-name="Muhammad Nabil Tanjung" 
+                             data-role="PERIODE 2023/2024"
+                             data-instagram="#">
+                            <div class="quote">
+                                <i class="fas fa-quote-left"></i>
+                                <p>"OSIS bukan sekadar organisasi, tetapi keluarga yang saling mendukung. Di sini saya belajar bahwa keberhasilan tidak hanya diukur dari pencapaian individu, tetapi dari bagaimana kita bisa membawa perubahan positif bagi lingkungan sekitar."</p>
+                                <i class="fas fa-quote-right"></i>
+                            </div>
+                            <p class="signature">--- ALUMNI OSIS SMK TRITECH INFORMATIKA PERIODE 2023/2024</p>
+                        </div>
+                    </div>
+                    
+                    <div class="sambutan-slider-nav">
+                        <div class="sambutan-slider-dot active" data-index="0"></div>
+                        <div class="sambutan-slider-dot" data-index="1"></div>
+                        <div class="sambutan-slider-dot" data-index="2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="pengurus-inti">
+        <div class="container">
+            <div class="section-header">
+                <h2>Pengurus & Anggota OSIS</h2>
+                <p>Struktur lengkap kepengurusan OSIS periode 2025/2026</p>
+            </div>
+            
+            <div class="struktur-pengurus">
+                <div class="pengurus-bidang">
+                    <h3 class="bidang-title"><i class="fas fa-crown"></i> PENGURUS INTI</h3>
+                    <div class="pengurus-grid">
+                        <div class="pengurus-item utama"
+                             data-name="Syarifa Nazla"
+                             data-jabatan="KETUA OSIS"
+                             data-divisi="PENGURUS INTI"
+                             data-photo="syarifaa.jpeg"
+                             data-instagram="https://instagram.com/syarifanazla">
+                            <div class="photo-placeholder">
+                                <img src="syarifaa.jpeg" alt="Syarifa Nazla" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                            </div>
+                            <div class="pengurus-info">
+                                <h4>Syarifa Nazla</h4>
+                                <p class="jabatan">KETUA OSIS</p>
+                            </div>
+                            <div class="kontak">
+                                <a href="https://instagram.com/syarifanazla" class="instagram-icon-small" target="_blank">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="pengurus-item"
+                             data-name="Raihan Al-Raffi"
+                             data-jabatan="WAKIL KETUA"
+                             data-divisi="PENGURUS INTI"
+                             data-photo="rehan.jpeg"
+                             data-instagram="https://instagram.com/rhnarffi">
+                            <div class="photo-placeholder">
+                                <img src="rehan.jpeg" alt="Raihan Al-Raffi" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                            </div>
+                            <div class="pengurus-info">
+                                <h4>Raihan Al-Raffi</h4>
+                                <p class="jabatan">WAKIL KETUA</p>
+                            </div>
+                            <div class="kontak">
+                                <a href="https://instagram.com/rhnarffi" class="instagram-icon-small" target="_blank">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="pengurus-item"
+                             data-name="Nazwa Jaisia Hati"
+                             data-jabatan="SEKRETARIS"
+                             data-divisi="PENGURUS INTI"
+                             data-photo="nazwaa.jpeg"
+                             data-instagram="https://instagram.com/nzwawa_jh">
+                            <div class="photo-placeholder">
+                                <img src="nazwaa.jpeg" alt="Nazwa Jaisia Hati" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                            </div>
+                            <div class="pengurus-info">
+                                <h4>Nazwa Jaisia Hati</h4>
+                                <p class="jabatan">SEKRETARIS</p>
+                            </div>
+                            <div class="kontak">
+                                <a href="https://instagram.com/nzwawa_jh" class="instagram-icon-small" target="_blank">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="pengurus-item"
+                             data-name="Sakila Cahaya Putri"
+                             data-jabatan="BENDAHARA"
+                             data-divisi="PENGURUS INTI"
+                             data-photo="kila.jpeg"
+                             data-instagram="https://instagram.com/shytr.kill">
+                            <div class="photo-placeholder">
+                                <img src="kila.jpeg" alt="Sakila Cahaya Putri" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                            </div>
+                            <div class="pengurus-info">
+                                <h4>Sakila Cahaya Putri</h4>
+                                <p class="jabatan">BENDAHARA</p>
+                            </div>
+                            <div class="kontak">
+                                <a href="https://instagram.com/shytr.kill" class="instagram-icon-small" target="_blank">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- BIDANG HUMAS DENGAN SLIDER -->
+                <div class="pengurus-bidang">
+                    <h3 class="bidang-title"><i class="fas fa-users"></i> BIDANG HUMAS</h3>
+                    <div class="pengurus-grid">
+                        <div class="pengurus-item"
+                             data-name="Dwi Putri Amelia"
+                             data-jabatan="Ketua Bidang Humas"
+                             data-divisi="HUMAS"
+                             data-photo="amel.jpeg"
+                             data-instagram="https://instagram.com/itscaramella_">
+                            <div class="photo-placeholder">
+                                <img src="amel.jpeg" alt="Dwi Putri Amellia" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                            </div>
+                            <div class="pengurus-info">
+                                <h4>Dwi Putri Amelia</h4>
+                                <p class="jabatan">Ketua Bidang Humas</p>
+                            </div>
+                            <div class="kontak">
+                                <a href="https://instagram.com/itscaramella_" class="instagram-icon-small" target="_blank">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="pengurus-item"
+                             data-name="Ayu Lestari"
+                             data-jabatan="Sekretaris Humas"
+                             data-divisi="HUMAS"
+                             data-photo="ayu.jpeg"
+                             data-instagram="https://instagram.com/ayueltari_">
+                            <div class="photo-placeholder">
+                                <img src="ayu.jpeg" alt="Ayu Lestari" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                            </div>
+                            <div class="pengurus-info">
+                                <h4>Ayu Lestari</h4>
+                                <p class="jabatan">Sekretaris Humas</p>
+                            </div>
+                            <div class="kontak">
+                                <a href="https://instagram.com/ayueltari_" class="instagram-icon-small" target="_blank">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="anggota-slider-section">
+                        <h4 class="anggota-slider-title">Anggota Bidang Humas</h4>
+                        <div class="anggota-slider-container">
+                            <div class="anggota-slider-track" id="humasSlider">
+                                <!-- Anggota Humas -->
+                                <div class="anggota-slide"
+                                     data-name="Anggrek Zahara"
+                                     data-jabatan="Anggota"
+                                     data-divisi="HUMAS"
+                                     data-photo="anggrek.jpeg"
+                                     data-instagram="#">
+                                    <div class="photo-placeholder small">
+                                        <img src="anggrek.jpeg" alt="Anggrek Zahara" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                                    </div>
+                                    <h5>Anggrek Zahara</h5>
+                                    <p class="jabatan">Anggota</p>
+                                </div>
+                                <div class="anggota-slide"
+                                     data-name="Cinta Aulia Kasih"
+                                     data-jabatan="Anggota"
+                                     data-divisi="HUMAS"
+                                     data-photo="cinta.jpeg"
+                                     data-instagram="#">
+                                    <div class="photo-placeholder small">
+                                        <img src="cinta.jpeg" alt="Cinta Aulia Kasih" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                                    </div>
+                                    <h5>Cinta Aulia Kasih</h5>
+                                    <p class="jabatan">Anggota</p>
+                                </div>
+                                <div class="anggota-slide"
+                                     data-name="Farel Rakha Hanania S"
+                                     data-jabatan="Anggota"
+                                     data-divisi="HUMAS"
+                                     data-photo="raka.jpeg"
+                                     data-instagram="#">
+                                    <div class="photo-placeholder small">
+                                        <img src="raka.jpeg" alt="Farel Rakha" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                                    </div>
+                                    <h5>Farel Rakha Hanania S</h5>
+                                    <p class="jabatan">Anggota</p>
+                                </div>
+                                <div class="anggota-slide"
+                                     data-name="Ikhsan Zakaria"
+                                     data-jabatan="Anggota"
+                                     data-divisi="HUMAS"
+                                     data-photo="ikhsan.jpeg"
+                                     data-instagram="#">
+                                    <div class="photo-placeholder small">
+                                        <img src="ikhsan.jpeg" alt="Ikhsan Zakaria" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                                    </div>
+                                    <h5>Ikhsan Zakaria</h5>
+                                    <p class="jabatan">Anggota</p>
+                                </div>
+                                <div class="anggota-slide"
+                                     data-name="Nadin Airani Alzahra"
+                                     data-jabatan="Anggota"
+                                     data-divisi="HUMAS"
+                                     data-photo="nadin.jpeg"
+                                     data-instagram="#">
+                                    <div class="photo-placeholder small">
+                                        <img src="nadin.jpeg" alt="Nadin Airani" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                                    </div>
+                                    <h5>Nadin Airani Alzahra</h5>
+                                    <p class="jabatan">Anggota</p>
+                                </div>
+                                <div class="anggota-slide"
+                                     data-name="Jihanda Azzaskia Hasibuan"
+                                     data-jabatan="Anggota"
+                                     data-divisi="HUMAS"
+                                     data-photo="jian.jpeg"
+                                     data-instagram="#">
+                                    <div class="photo-placeholder small">
+                                        <img src="jian.jpeg" alt="Jihanda Azzaskia" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                                    </div>
+                                    <h5>Jihanda Azzaskia Hasibuan</h5>
+                                    <p class="jabatan">Anggota</p>
+                                </div>
+                                <div class="anggota-slide"
+                                     data-name="Mano Gusti Leontera"
+                                     data-jabatan="Anggota"
+                                     data-divisi="HUMAS"
+                                     data-photo="mano.jpeg"
+                                     data-instagram="#">
+                                    <div class="photo-placeholder small">
+                                        <img src="mano.jpeg" alt="Mano Gusti" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                                    </div>
+                                    <h5>Mano Gusti Leontera</h5>
+                                    <p class="jabatan">Anggota</p>
+                                </div>
+                                <div class="anggota-slide"
+                                     data-name="Syakira Afril Ridha"
+                                     data-jabatan="Anggota"
+                                     data-divisi="HUMAS"
+                                     data-photo="syakira.jpeg"
+                                     data-instagram="#">
+                                    <div class="photo-placeholder small">
+                                        <img src="syakira.jpeg" alt="Syakira Afril" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                                    </div>
+                                    <h5>Syakira Afril Ridha</h5>
+                                    <p class="jabatan">Anggota</p>
+                                </div>
+                                <div class="anggota-slide"
+                                     data-name="Asiqah Bunga Pratiwi L"
+                                     data-jabatan="Anggota"
+                                     data-divisi="HUMAS"
+                                     data-photo="asiqah.jpeg"
+                                     data-instagram="#">
+                                    <div class="photo-placeholder small">
+                                        <img src="asiqah.jpeg" alt="Asiqah Bunga" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                                    </div>
+                                    <h5>Asiqah Bunga Pratiwi L</h5>
+                                    <p class="jabatan">Anggota</p>
+                                </div>
+                                <div class="anggota-slide"
+                                     data-name="Alifah Humaira"
+                                     data-jabatan="Anggota"
+                                     data-divisi="HUMAS"
+                                     data-photo="alifah.jpeg"
+                                     data-instagram="#">
+                                    <div class="photo-placeholder small">
+                                        <img src="alifah.jpeg" alt="Alifah Humaira" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                                    </div>
+                                    <h5>Alifah Humaira</h5>
+                                    <p class="jabatan">Anggota</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slider-controls">
+                            <button class="slider-btn" id="humasPrev">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <button class="slider-btn" id="humasNext">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- BIDANG OLAHRAGA DENGAN SLIDER -->
+                <div class="pengurus-bidang">
+                    <h3 class="bidang-title"><i class="fas fa-futbol"></i> BIDANG OLAHRAGA</h3>
+                    <div class="pengurus-grid">
+                        <div class="pengurus-item"
+                             data-name="Ulung Hakim Hasibuan"
+                             data-jabatan="Ketua Bidang Olahraga"
+                             data-divisi="OLAHRAGA"
+                             data-photo="yhungh.jpeg"
+                             data-instagram="https://instagram.com/yunggparcker">
+                            <div class="photo-placeholder">
+                                <img src="yhungh.jpeg" alt="Ulung Hakim" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                            </div>
+                            <div class="pengurus-info">
+                                <h4>Ulung Hakim Hasibuan</h4>
+                                <p class="jabatan">Ketua Bidang Olahraga</p>
+                            </div>
+                            <div class="kontak">
+                                <a href="https://instagram.com/yunggparcker" class="instagram-icon-small" target="_blank">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="pengurus-item"
+                             data-name="Annisa Fitri Khalisa"
+                             data-jabatan="Sekretaris Olahraga"
+                             data-divisi="OLAHRAGA"
+                             data-photo="icha.jpeg"
+                             data-instagram="https://instagram.com/ichaallsaa">
+                            <div class="photo-placeholder">
+                                <img src="icha.jpeg" alt="Annisa Fitri" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                            </div>
+                            <div class="pengurus-info">
+                                <h4>Annisa Fitri Khalisa</h4>
+                                <p class="jabatan">Sekretaris Olahraga</p>
+                            </div>
+                            <div class="kontak">
+                                <a href="https://instagram.com/ichaallsaa" class="instagram-icon-small" target="_blank">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="anggota-slider-section">
+                        <h4 class="anggota-slider-title">Anggota Bidang Olahraga</h4>
+                        <div class="anggota-slider-container">
+                            <div class="anggota-slider-track" id="olahragaSlider">
+                                <!-- Anggota Olahraga -->
+                                <div class="anggota-slide"
+                                     data-name="Rizki Yusran Dewantara"
+                                     data-jabatan="Anggota"
+                                     data-divisi="OLAHRAGA"
+                                     data-photo="dewa.jpeg"
+                                     data-instagram="#">
+                                    <div class="photo-placeholder small">
+                                        <img src="dewa.jpeg" alt="Rizki Yusran" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                                    </div>
+                                    <h5>Rizki Yusran Dewantara</h5>
+                                    <p class="jabatan">Anggota</p>
+                                </div>
+                                <div class="anggota-slide"
+                                     data-name="Aqila Sanjaya"
+                                     data-jabatan="Anggota"
+                                     data-divisi="OLAHRAGA"
+                                     data-photo="aqil.jpeg"
+                                     data-instagram="#">
+                                    <div class="photo-placeholder small">
+                                        <img src="aqil.jpeg" alt="Aqila Sanjaya" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                                    </div>
+                                    <h5>Aqila Sanjaya</h5>
+                                    <p class="jabatan">Anggota</p>
+                                </div>
+                                <div class="anggota-slide"
+                                     data-name="Azel Arya Areska"
+                                     data-jabatan="Anggota"
+                                     data-divisi="OLAHRAGA"
+                                     data-photo="azel.jpeg"
+                                     data-instagram="#">
+                                    <div class="photo-placeholder small">
+                                        <img src="azel.jpeg" alt="Azel Arya" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                                    </div>
+                                    <h5>Azel Arya Areska</h5>
+                                    <p class="jabatan">Anggota</p>
+                                </div>
+                                <div class="anggota-slide"
+                                     data-name="Dzamar Abiyu Pasha"
+                                     data-jabatan="Anggota"
+                                     data-divisi="OLAHRAGA"
+                                     data-photo="abiyu.jpeg"
+                                     data-instagram="#">
+                                    <div class="photo-placeholder small">
+                                        <img src="abiyu.jpeg" alt="Dzamar Abiyu" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                                    </div>
+                                    <h5>Dzamar Abiyu Pasha</h5>
+                                    <p class="jabatan">Anggota</p>
+                                </div>
+                                <div class="anggota-slide"
+                                     data-name="Fahmi Ansyah Tambunan"
+                                     data-jabatan="Anggota"
+                                     data-divisi="OLAHRAGA"
+                                     data-photo="fahmi.jpeg"
+                                     data-instagram="#">
+                                    <div class="photo-placeholder small">
+                                        <img src="fahmi.jpeg" alt="Fahmi Ansyah" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                                    </div>
+                                    <h5>Fahmi Ansyah Tambunan</h5>
+                                    <p class="jabatan">Anggota</p>
+                                </div>
+                                <div class="anggota-slide"
+                                     data-name="Honey Rafifah Sakhi"
+                                     data-jabatan="Anggota"
+                                     data-divisi="OLAHRAGA"
+                                     data-photo="honey.jpeg"
+                                     data-instagram="#">
+                                    <div class="photo-placeholder small">
+                                        <img src="honey.jpeg" alt="Honey Rafifah" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                                    </div>
+                                    <h5>Honey Rafifah Sakhi</h5>
+                                    <p class="jabatan">Anggota</p>
+                                </div>
+                                <div class="anggota-slide"
+                                     data-name="Kirana Arifin Shufi"
+                                     data-jabatan="Anggota"
+                                     data-divisi="OLAHRAGA"
+                                     data-photo="kirana.jpeg"
+                                     data-instagram="#">
+                                    <div class="photo-placeholder small">
+                                        <img src="kirana.jpeg" alt="Kirana Arifin" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                                    </div>
+                                    <h5>Kirana Arifin Shufi</h5>
+                                    <p class="jabatan">Anggota</p>
+                                </div>
+                                <div class="anggota-slide"
+                                     data-name="Mutiara Azzahra"
+                                     data-jabatan="Anggota"
+                                     data-divisi="OLAHRAGA"
+                                     data-photo="tiara.jpeg"
+                                     data-instagram="#">
+                                    <div class="photo-placeholder small">
+                                        <img src="tiara.jpeg" alt="Mutiara Azzahra" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                                    </div>
+                                    <h5>Mutiara Azzahra</h5>
+                                    <p class="jabatan">Anggota</p>
+                                </div>
+                                <div class="anggota-slide"
+                                     data-name="Adithya Afriyandi"
+                                     data-jabatan="Anggota"
+                                     data-divisi="OLAHRAGA"
+                                     data-photo="adit.jpeg"
+                                     data-instagram="#">
+                                    <div class="photo-placeholder small">
+                                        <img src="adit.jpeg" alt="Adithya Afriyandi" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                                    </div>
+                                    <h5>Adithya Afriyandi</h5>
+                                    <p class="jabatan">Anggota</p>
+                                </div>
+                                <div class="anggota-slide"
+                                     data-name="Muhammad Aditya Harahap"
+                                     data-jabatan="Anggota"
+                                     data-divisi="OLAHRAGA"
+                                     data-photo="adith.jpeg"
+                                     data-instagram="#">
+                                    <div class="photo-placeholder small">
+                                        <img src="adith.jpeg" alt="Muhammad Aditya" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                                    </div>
+                                    <h5>Muhammad Aditya Harahap</h5>
+                                    <p class="jabatan">Anggota</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slider-controls">
+                            <button class="slider-btn" id="olahragaPrev">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <button class="slider-btn" id="olahragaNext">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- BIDANG AGAMA DENGAN SLIDER -->
+                <div class="pengurus-bidang">
+                    <h3 class="bidang-title"><i class="fas fa-pray"></i> BIDANG AGAMA</h3>
+                    <div class="pengurus-grid">
+                        <div class="pengurus-item"
+                             data-name="Muhammad Abrar Riva"
+                             data-jabatan="Ketua Bidang Agama"
+                             data-divisi="AGAMA"
+                             data-photo="abrar.jpeg"
+                             data-instagram="https://instagram.com/abrarriva">
+                            <div class="photo-placeholder">
+                                <img src="abrar.jpeg" alt="Muhammad Abrar" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                            </div>
+                            <div class="pengurus-info">
+                                <h4>Muhammad Abrar Riva</h4>
+                                <p class="jabatan">Ketua Bidang Agama</p>
+                            </div>
+                            <div class="kontak">
+                                <a href="https://instagram.com/abrarriva" class="instagram-icon-small" target="_blank">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="pengurus-item"
+                             data-name="Ninda Sartika"
+                             data-jabatan="Sekretaris Agama"
+                             data-divisi="AGAMA"
+                             data-photo="ninda.jpeg"
+                             data-instagram="https://instagram.com/nindaasartika">
+                            <div class="photo-placeholder">
+                                <img src="ninda.jpeg" alt="Ninda Sartika" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                            </div>
+                            <div class="pengurus-info">
+                                <h4>Ninda Sartika</h4>
+                                <p class="jabatan">Sekretaris Agama</p>
+                            </div>
+                            <div class="kontak">
+                                <a href="https://instagram.com/nindaasartika" class="instagram-icon-small" target="_blank">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="anggota-slider-section">
+                        <h4 class="anggota-slider-title">Anggota Bidang Agama</h4>
+                        <div class="anggota-slider-container">
+                            <div class="anggota-slider-track" id="agamaSlider">
+                                <!-- Anggota Agama -->
+                                <div class="anggota-slide"
+                                     data-name="Bintang Pratama E"
+                                     data-jabatan="Anggota"
+                                     data-divisi="AGAMA"
+                                     data-photo="bintang.jpeg"
+                                     data-instagram="#">
+                                    <div class="photo-placeholder small">
+                                        <img src="bintang.jpeg" alt="Bintang Pratama" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                                    </div>
+                                    <h5>Bintang Pratama E</h5>
+                                    <p class="jabatan">Anggota</p>
+                                </div>
+                                <div class="anggota-slide"
+                                     data-name="Jaky Prayoga"
+                                     data-jabatan="Anggota"
+                                     data-divisi="AGAMA"
+                                     data-photo="jaky.jpeg"
+                                     data-instagram="#">
+                                    <div class="photo-placeholder small">
+                                        <img src="jaky.jpeg" alt="Jaky Prayoga" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                                    </div>
+                                    <h5>Jaky Prayoga</h5>
+                                    <p class="jabatan">Anggota</p>
+                                </div>
+                                <div class="anggota-slide"
+                                     data-name="Mola Hidrah Umah"
+                                     data-jabatan="Anggota"
+                                     data-divisi="AGAMA"
+                                     data-photo="mola.jpeg"
+                                     data-instagram="#">
+                                    <div class="photo-placeholder small">
+                                        <img src="mola.jpeg" alt="Mola Hidrah" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                                    </div>
+                                    <h5>Mola Hidrah Umah</h5>
+                                    <p class="jabatan">Anggota</p>
+                                </div>
+                                <div class="anggota-slide"
+                                     data-name="Revina Syahrina Sihombing"
+                                     data-jabatan="Anggota"
+                                     data-divisi="AGAMA"
+                                     data-photo="revina.jpeg"
+                                     data-instagram="#">
+                                    <div class="photo-placeholder small">
+                                        <img src="revina.jpeg" alt="Revina Syahrina" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                                    </div>
+                                    <h5>Revina Syahrina Sihombing</h5>
+                                    <p class="jabatan">Anggota</p>
+                                </div>
+                                <div class="anggota-slide"
+                                     data-name="Yuna Audia Putri"
+                                     data-jabatan="Anggota"
+                                     data-divisi="AGAMA"
+                                     data-photo="yuna.jpeg"
+                                     data-instagram="#">
+                                    <div class="photo-placeholder small">
+                                        <img src="yuna.jpeg" alt="Yuna Audia" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                                    </div>
+                                    <h5>Yuna Audia Putri</h5>
+                                    <p class="jabatan">Anggota</p>
+                                </div>
+                                <div class="anggota-slide"
+                                     data-name="Zahratul Jannah"
+                                     data-jabatan="Anggota"
+                                     data-divisi="AGAMA"
+                                     data-photo="zahra.jpeg"
+                                     data-instagram="#">
+                                    <div class="photo-placeholder small">
+                                        <img src="zahra.jpeg" alt="Zahratul Jannah" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                                    </div>
+                                    <h5>Zahratul Jannah</h5>
+                                    <p class="jabatan">Anggota</p>
+                                </div>
+                                <div class="anggota-slide"
+                                     data-name="Ziyan Ramadhani"
+                                     data-jabatan="Anggota"
+                                     data-divisi="AGAMA"
+                                     data-photo="ziyan.jpeg"
+                                     data-instagram="#">
+                                    <div class="photo-placeholder small">
+                                        <img src="ziyan.jpeg" alt="Ziyan Ramadhani" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                                    </div>
+                                    <h5>Ziyan Ramadhani</h5>
+                                    <p class="jabatan">Anggota</p>
+                                </div>
+                                <div class="anggota-slide"
+                                     data-name="Intan Mutiara Harahap"
+                                     data-jabatan="Anggota"
+                                     data-divisi="AGAMA"
+                                     data-photo="intan.jpeg"
+                                     data-instagram="#">
+                                    <div class="photo-placeholder small">
+                                        <img src="intan.jpeg" alt="Ziyan Ramadhani" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                                    </div>
+                                    <h5>Intan Mutiara Harahap</h5>
+                                    <p class="jabatan">Anggota</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slider-controls">
+                            <button class="slider-btn" id="agamaPrev">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <button class="slider-btn" id="agamaNext">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- BIDANG MEDIA KREATIF DENGAN SLIDER -->
+                <div class="pengurus-bidang">
+                    <h3 class="bidang-title"><i class="fas fa-laptop"></i> BIDANG MEDIA KREATIF</h3>
+                    <div class="pengurus-grid">
+                        <div class="pengurus-item"
+                             data-name="Khairi Hamni Effendi"
+                             data-jabatan="Ketua Bidang Media Kreatif"
+                             data-divisi="MEDIA KREATIF"
+                             data-photo="khairi.jpeg"
+                             data-instagram="https://instagram.com/_khaaiiy">
+                            <div class="photo-placeholder">
+                                <img src="khairi.jpeg" alt="Khairi Hamni" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                            </div>
+                            <div class="pengurus-info">
+                                <h4>Khairi Hamni Effendi</h4>
+                                <p class="jabatan">Ketua Bidang Media Kreatif</p>
+                            </div>
+                            <div class="kontak">
+                                <a href="https://instagram.com/_khaaiiy" class="instagram-icon-small" target="_blank">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="pengurus-item"
+                             data-name="Raffie Akbar"
+                             data-jabatan="Sekretaris Media Kreatif"
+                             data-divisi="MEDIA KREATIF"
+                             data-photo="raffie.jpeg"
+                             data-instagram="https://instagram.com/raffieaakbar">
+                            <div class="photo-placeholder">
+                                <img src="raffie.jpeg" alt="Raffie Akbar" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                            </div>
+                            <div class="pengurus-info">
+                                <h4>Raffie Akbar</h4>
+                                <p class="jabatan">Sekretaris Media Kreatif</p>
+                            </div>
+                            <div class="kontak">
+                                <a href="https://instagram.com/raffieaakbar" class="instagram-icon-small" target="_blank">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="anggota-slider-section">
+                        <h4 class="anggota-slider-title">Anggota Bidang Media Kreatif</h4>
+                        <div class="anggota-slider-container">
+                            <div class="anggota-slider-track" id="mediaSlider">
+                                <!-- Anggota Media Kreatif -->
+                                <div class="anggota-slide"
+                                     data-name="Aurel Faizah"
+                                     data-jabatan="Anggota"
+                                     data-divisi="MEDIA KREATIF"
+                                     data-photo="aurel.jpeg"
+                                     data-instagram="#">
+                                    <div class="photo-placeholder small">
+                                        <img src="aurel.jpeg" alt="Aurel Faizah" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                                    </div>
+                                    <h5>Aurel Faizah</h5>
+                                    <p class="jabatan">Anggota</p>
+                                </div>
+                                <div class="anggota-slide"
+                                     data-name="Bebhy Rihadatul Agwien"
+                                     data-jabatan="Anggota"
+                                     data-divisi="MEDIA KREATIF"
+                                     data-photo="bebhy.jpeg"
+                                     data-instagram="#">
+                                    <div class="photo-placeholder small">
+                                        <img src="bebhy.jpeg" alt="Bebhy Rihadatul" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                                    </div>
+                                    <h5>Bebhy Rihadatul Agwien</h5>
+                                    <p class="jabatan">Anggota</p>
+                                </div>
+                                <div class="anggota-slide"
+                                     data-name="Hanim Ahsan Al-asqolani"
+                                     data-jabatan="Anggota"
+                                     data-divisi="MEDIA KREATIF"
+                                     data-photo="hanim.jpeg"
+                                     data-instagram="#">
+                                    <div class="photo-placeholder small">
+                                        <img src="hanim.jpeg" alt="Hanim Ahsan" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                                    </div>
+                                    <h5>Hanim Ahsan Al-asqolani</h5>
+                                    <p class="jabatan">Anggota</p>
+                                </div>
+                                <div class="anggota-slide"
+                                     data-name="Livia Zalsyahira Putri"
+                                     data-jabatan="Anggota"
+                                     data-divisi="MEDIA KREATIF"
+                                     data-photo="livia.jpeg"
+                                     data-instagram="#">
+                                    <div class="photo-placeholder small">
+                                        <img src="livia.jpeg" alt="Livia Zalsyahira" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                                    </div>
+                                    <h5>Livia Zalsyahira Putri</h5>
+                                    <p class="jabatan">Anggota</p>
+                                </div>
+                                <div class="anggota-slide"
+                                     data-name="Muhammad Hasbi Ibra"
+                                     data-jabatan="Anggota"
+                                     data-divisi="MEDIA KREATIF"
+                                     data-photo="hasbi.jpeg"
+                                     data-instagram="#">
+                                    <div class="photo-placeholder small">
+                                        <img src="hasbi.jpeg" alt="Muhammad Hasbi" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                                    </div>
+                                    <h5>Muhammad Hasbi Ibra</h5>
+                                    <p class="jabatan">Anggota</p>
+                                </div>
+                                <div class="anggota-slide"
+                                     data-name="Nooralvino"
+                                     data-jabatan="Anggota"
+                                     data-divisi="MEDIA KREATIF"
+                                     data-photo="pino.jpeg"
+                                     data-instagram="#">
+                                    <div class="photo-placeholder small">
+                                        <img src="pino.jpeg" alt="Nooralvino" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                                    </div>
+                                    <h5>Nooralvino</h5>
+                                    <p class="jabatan">Anggota</p>
+                                </div>
+                                <div class="anggota-slide"
+                                     data-name="Rizalul Ridho"
+                                     data-jabatan="Anggota"
+                                     data-divisi="MEDIA KREATIF"
+                                     data-photo="rizal.jpeg"
+                                     data-instagram="#">
+                                    <div class="photo-placeholder small">
+                                        <img src="rizal.jpeg" alt="Rizalul Ridho" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                                    </div>
+                                    <h5>Rizalul Ridho</h5>
+                                    <p class="jabatan">Anggota</p>
+                                </div>
+                                <div class="anggota-slide"
+                                     data-name="Yasmin Awwalia Putri"
+                                     data-jabatan="Anggota"
+                                     data-divisi="MEDIA KREATIF"
+                                     data-photo="yasmin.jpeg"
+                                     data-instagram="#">
+                                    <div class="photo-placeholder small">
+                                        <img src="yasmin.jpeg" alt="Yasmin Awwalia" onerror="this.innerHTML='<i class=\"fas fa-user\"></i>'">
+                                    </div>
+                                    <h5>Yasmin Awwalia Putri</h5>
+                                    <p class="jabatan">Anggota</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="slider-controls">
+                            <button class="slider-btn" id="mediaPrev">
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <button class="slider-btn" id="mediaNext">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+     <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <div class="logo-icon">
+                            <img src="osis.jpg" alt="Logo OSIS">
+                        </div>
+                        <div class="logo-text">
+                            <h3>OSIS</h3>
+                            <p>SMK TRITECH INFORMATIKA</p>
+                        </div>
+                    </div>
+                    <p class="footer-description">Membentuk generasi muda yang berkualitas melalui berbagai kegiatan positif dan pengembangan karakter.</p>
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/osistritech?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="><i class="fab fa-instagram"></i></a>
+                        <a href="https://youtube.com/@officialsmktritechinformat3051?si=jmgbhCuSreIg1KNX"><i class="fab fa-youtube"></i></a>
+                        <a href="https://www.tiktok.com/@osistc?_r=1&_t=ZS-93CHCp0XbYP"><i class="fab fa-tiktok"></i></a>
+                        <a href="https://www.facebook.com/share/1BMKiQRStU/?mibextid=wwXIfr"><i class="fab fa-facebook"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Kontak Kami</h4>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> Jl. Bhayangkara No. 484, Indra Kasih, Kec. Medan Tembung, Kota Medan, Sumatera Utara 20221</li>
+                        <li><i class="fas fa-phone"></i> (+62) 811-6333-131</li>
+                        <li><i class="fas fa-envelope"></i> smktritech10@gmail.com</li>
+                        <li><i class="fas fa-clock"></i> Senin - Kamis, 15.00 - 17.30 WIB</li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Newsletter</h4>
+                    <p>Dapatkan informasi terbaru tentang kegiatan OSIS</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Email Anda" required>
+                        <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; <span class="current-year">2025</span> OSIS SMK TRITECH INFORMATIKA. All Rights Reserved.</p>
+                <p>Designed with <i class="fas fa-heart"></i> by OSIS Web Team</p>
+            </div>
+        </div>
+    </footer>
+    
+     <script src="script.js"></script>
+    <script>
+    // Script dipendekkan - hanya fungsi essential
+    document.addEventListener('DOMContentLoaded', function() {
+        // Logo Lightbox
+        const logoClick = document.getElementById('logoClick');
+        const logoLightbox = document.getElementById('logoLightbox');
+        const closeLightboxBtn = document.getElementById('closeLightboxBtn');
+        const closeLightbox = document.getElementById('closeLightbox');
+        
+        if (logoClick) logoClick.addEventListener('click', () => { logoLightbox.classList.add('active'); document.body.style.overflow = 'hidden'; });
+        if (closeLightboxBtn) closeLightboxBtn.addEventListener('click', () => { logoLightbox.classList.remove('active'); document.body.style.overflow = 'auto'; });
+        if (closeLightbox) closeLightbox.addEventListener('click', () => { logoLightbox.classList.remove('active'); document.body.style.overflow = 'auto'; });
+        if (logoLightbox) logoLightbox.addEventListener('click', (e) => { if (e.target === logoLightbox) { logoLightbox.classList.remove('active'); document.body.style.overflow = 'auto'; } });
+        
+        // Lightbox Pengurus
+        const pengurusLightbox = document.getElementById('pengurusLightbox');
+        const closePengurusLightbox = document.getElementById('closePengurusLightbox');
+        
+        function openPengurusLightbox(data) {
+            if (!data) return;
+            document.getElementById('lightboxPhoto').src = data.photo;
+            document.getElementById('lightboxName').textContent = data.name;
+            document.getElementById('lightboxJabatan').textContent = data.jabatan;
+            document.getElementById('lightboxDivisi').textContent = data.divisi;
+            pengurusLightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.photo-placeholder') && !e.target.closest('.logo') && !e.target.closest('.footer-logo')) {
+                const photoPlaceholder = e.target.closest('.photo-placeholder');
+                let element = photoPlaceholder.closest('.pengurus-item') || photoPlaceholder.closest('.anggota-slide') || photoPlaceholder.closest('.sambutan-img .photo-placeholder');
+                if (element) {
+                    openPengurusLightbox({
+                        name: element.getAttribute('data-name') || 'Nama tidak tersedia',
+                        jabatan: element.getAttribute('data-jabatan') || element.getAttribute('data-role') || 'Jabatan tidak tersedia',
+                        divisi: element.getAttribute('data-divisi') || 'Divisi tidak tersedia',
+                        photo: element.getAttribute('data-photo') || 'pp.jpeg'
+                    });
+                }
+            }
+        });
+        
+        if (closePengurusLightbox) closePengurusLightbox.addEventListener('click', () => { pengurusLightbox.classList.remove('active'); document.body.style.overflow = 'auto'; });
+        if (pengurusLightbox) pengurusLightbox.addEventListener('click', (e) => { if (e.target === pengurusLightbox) { pengurusLightbox.classList.remove('active'); document.body.style.overflow = 'auto'; } });
+        
+        // ESC key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                if (logoLightbox.classList.contains('active')) { logoLightbox.classList.remove('active'); document.body.style.overflow = 'auto'; }
+                if (pengurusLightbox.classList.contains('active')) { pengurusLightbox.classList.remove('active'); document.body.style.overflow = 'auto'; }
+            }
+        });
+        
+        // Tahun footer
+        const currentYearElement = document.querySelector('.current-year');
+        if (currentYearElement) currentYearElement.textContent = new Date().getFullYear();
+    });
+
+    </script>
+
+</body>
+</html>
